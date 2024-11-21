@@ -7,18 +7,18 @@ export const login = async (req: Request, res: Response) => {
   // TODO: If the user exists and the password is correct, return a JWT token
   // Utility function for generating a JWT
   const {username, password} = req.body
-  const secretKey = process.env.JWT_SECRET_KEY;
-  if (!secretKey) {
-    throw new Error('Secret key is missing');
-  }
   const user = await User.findOne({ where: { username } });
-
+  
   // If user does not exist, return null
   if (!user) return res.status(401).json({message: "username not found"});
-
+  
   // Check if the provided password matches the stored hashed password
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) return res.status(401).json({message: "password not found"});;
+  const secretKey = process.env.JWT_SECRET_KEY || '';
+  // if (!secretKey) {
+  //   throw new Error('Secret key is missing');
+  // }
   // Generate a JWT token with an expiration of 1 hour
 const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
   return res.json({token})
