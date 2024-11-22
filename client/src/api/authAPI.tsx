@@ -12,7 +12,7 @@ const login = async (userInfo: UserLogin) => {
       body: JSON.stringify(userInfo)
     });
     console.log('errorrr')
-    console.log(response)
+    // console.log(response)
     const data = await response.json();
 
     // Throw error if response status is not OK (200-299)

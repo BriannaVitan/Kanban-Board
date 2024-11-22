@@ -7,6 +7,8 @@ export const login = async (req: Request, res: Response) => {
   // TODO: If the user exists and the password is correct, return a JWT token
   // Utility function for generating a JWT
   const {username, password} = req.body
+  try {
+
   const user = await User.findOne({ where: { username } });
   
   // If user does not exist, return null
@@ -22,7 +24,12 @@ export const login = async (req: Request, res: Response) => {
   // Generate a JWT token with an expiration of 1 hour
 const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
   return res.json({token})
+} catch(error) {
+  console.error(error)
+  return res.status(500).json({error})
+}
 };
+
 
 const router = Router();
 
