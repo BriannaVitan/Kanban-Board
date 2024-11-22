@@ -11,6 +11,9 @@ const login = async (userInfo: UserLogin) => {
       },
       body: JSON.stringify(userInfo)
     });
+    console.log('errorrr')
+    console.log(response)
+    const data = await response.json();
 
     // Throw error if response status is not OK (200-299)
     if (!response.ok) {
@@ -19,7 +22,6 @@ const login = async (userInfo: UserLogin) => {
     }
 
     // Parse the response body as JSON
-    const data = await response.json();
 
     return data;  // Return the data received from the server
   } catch (err) {

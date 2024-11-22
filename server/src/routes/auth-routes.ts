@@ -10,11 +10,11 @@ export const login = async (req: Request, res: Response) => {
   const user = await User.findOne({ where: { username } });
   
   // If user does not exist, return null
-  if (!user) return res.status(401).json({message: "username not found"});
+  if (!user) {return res.status(401).json({message: "username not found"})}
   
   // Check if the provided password matches the stored hashed password
   const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) return res.status(401).json({message: "password not found"});;
+  if (!isPasswordValid) {return res.status(401).json({message: "password not found"})}
   const secretKey = process.env.JWT_SECRET_KEY || '';
   // if (!secretKey) {
   //   throw new Error('Secret key is missing');
